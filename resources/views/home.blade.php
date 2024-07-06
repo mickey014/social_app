@@ -13,7 +13,7 @@
                     <h1>{{ $user->username; }}</h1>
                 </div>
     
-                <a href="javascript:;">Add New Post</a>
+                <a href="/p/create">Add New Post</a>
             </div>
 
             <div class="d-flex gap-5">
@@ -31,15 +31,11 @@
     </div>
 
     <div class="row">
+        @foreach($user->posts as $post)
         <div class="col-4">
-            <img src="{{ url('/') }}/img/post1.jpg" alt="" class="w-100">
+            <img src="/storage/{{$post->image;}}" alt="{{$post->image;}}" class="w-100">
         </div>
-        <div class="col-4">
-            <img src="{{ url('/') }}/img/post2.jpg" alt="" class="w-100">
-        </div>
-        <div class="col-4">
-            <img src="{{ url('/') }}/img/post3.jpg" alt="" class="w-100">
-        </div>
+        @endforeach
     </div>
 </div>
 @endsection

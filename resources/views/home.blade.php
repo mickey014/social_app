@@ -17,7 +17,7 @@
             </div>
 
             <div class="d-flex gap-5">
-                <div><strong>127k</strong> posts</div>
+                <div><strong>{{ $user->posts->count(); }}</strong> posts</div>
                 <div><strong>22k</strong> followers</div>
                 <div><strong>34k</strong> following</div>
             </div>

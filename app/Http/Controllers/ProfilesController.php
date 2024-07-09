@@ -12,4 +12,8 @@ class ProfilesController extends Controller
         $user = User::findOrFail($user);
         return view('home',['user' => $user]);
     }
+
+    public function edit(User $user) {
+        return view('profiles.edit',compact('user'));
+    }
 }

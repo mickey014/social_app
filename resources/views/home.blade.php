@@ -16,6 +16,8 @@
                 <a href="/p/create">Add New Post</a>
             </div>
 
+            <a href="/profile/{{$user->id}}/edit">Edit Profile</a>
+
             <div class="d-flex gap-5">
                 <div><strong>{{ $user->posts->count(); }}</strong> posts</div>
                 <div><strong>22k</strong> followers</div>

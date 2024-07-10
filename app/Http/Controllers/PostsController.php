@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Post as Post_model;
+use App\Models\Post;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -43,7 +43,7 @@ class PostsController extends Controller
         return redirect('/profile/'. auth()->user()->id);
     }
 
-    public function show(Post_model $post) {
+    public function show(Post $post) {
         return view('posts.show',compact('post'));
     }
 }

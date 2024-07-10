@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <form action="/profile/{{ $user->id }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profiles.update', $user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('patch')
+        @method('put')
         <div class="col-4 offset-4">
 
             <div class="row">
@@ -14,7 +14,7 @@
             <div class="form-group row">
                 <label for="title">Title</label>
                 <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" 
-                value="{{ old('title') ?? $user->profile->title; }}"  autofocus>
+                value="{{ old('title') ?? $user->profile->title;}}"  autofocus>
 
                 @error('title')
                     <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
 
             <div class="form-group row">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" class="form-control @error('title') is-invalid @enderror" cols="30" rows="5">{{old('description') ?? $user->profile->description;}}
+                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" cols="30" rows="5">{{old('description') ?? $user->profile->description;}}
                 </textarea>
 
                 @error('description')

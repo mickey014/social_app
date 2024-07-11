@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ route('profiles.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="col-4 offset-4">

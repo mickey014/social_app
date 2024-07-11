@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
-            <img src="/img/kirkpic.png" class="w-100 rounded-circle" alt="">
+            <img src="/storage/{{$user->profile->image}}" class="w-100 rounded-circle" alt="">
         </div>
         <div class="col-9 p-5">
 
@@ -13,10 +13,14 @@
                     <h1>{{ $user->username; }}</h1>
                 </div>
     
+                @can('update', $user->profile)
                 <a href="/p/create">Add New Post</a>
+                @endcan
             </div>
 
+            @can('update', $user->profile)
             <a href="/profile/{{$user->id}}/edit">Edit Profile</a>
+            @endcan
 
             <div class="d-flex gap-5">
                 <div><strong>{{ $user->posts->count(); }}</strong> posts</div>

@@ -18,7 +18,7 @@ services:
       - socialappdockerize
 
   mysql:
-    image: mysql:8.0.31
+    image: mysql:8.0.26
     container_name: lcp_mysql
     restart: unless-stopped
     tty: true
@@ -32,7 +32,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./dockerize/mysql/data:/var/lib/mysql
+      - my-datavolume:/var/lib/mysql
       - ./dockerize/mysql/my.cnf:/etc/mysql/conf.d/mysql-custom.cnf
     networks:
       - socialappdockerize
@@ -81,5 +81,8 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - socialappdockerize
+volumes:
+  my-datavolume:
+
 networks:
   socialappdockerize:

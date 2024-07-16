@@ -1,88 +1,35 @@
 version: "4.31.1"
 
 services:
-
-  webserver:
-    image: nginx:stable-alpine
+  server:
+    image: nginx:1.17-alpine
     container_name: lcp_nginx
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - .:/var/www/html
       - ./dockerize/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
       - mysql
-    networks:
-      - socialappdockerize
-
-  mysql:
-    image: mysql:8.0.26
-    container_name: lcp_mysql
-    restart: unless-stopped
-    tty: true
-    ports: 
-      - "33061:3306"
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - my-datavolume:/var/lib/mysql
-      - ./dockerize/mysql/my.cnf:/etc/mysql/conf.d/mysql-custom.cnf
-    networks:
-      - socialappdockerize
-
   php:
     build:
       context: .
       dockerfile: ./dockerize/app/php.dockerfile
-    container_name: lcp_php
     volumes:
       - .:/var/www/html
+  mysql:
+    platform: linux/x86_64 
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
     ports:
-      - "9000:9000"
-    networks:
-      - socialappdockerize 
-
-  composer:
-    image: composer:latest
-    container_name: lcp_composer
-    volumes:
-      - .:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - php
-    networks:
-      - socialappdockerize
-
-  npm:
-    image: node:20-alpine
-    container_name: lcp_npm
-    volumes:
-      - .:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ['npm']
-
-  artisan:
-    build:
-      context: .
-      dockerfile: ./dockerize/app/php.dockerfile
-    container_name: lcp_artisan
-    volumes:
-      - .:/var/www/html
-    depends_on:
-      - mysql
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - socialappdockerize
-volumes:
-  my-datavolume:
-
-networks:
-  socialappdockerize:
+      - 81:80

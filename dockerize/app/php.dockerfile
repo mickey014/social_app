@@ -1,3 +1,8 @@
+FROM composer as build
+COPY . /app/
+RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
+
+
 FROM php:8.1.13-fpm-alpine
 
 WORKDIR /var/www/html

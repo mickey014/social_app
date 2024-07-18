@@ -1,51 +1,59 @@
-version: "4.31.1"
+version: '3'
 
 services:
+<<<<<<< HEAD:docker-compose.yml2
   server:
     image: nginx:1.17-alpine
     container_name: nginx
     restart: unless-stopped
+=======
+
+  nginx:
+    image: nginx:latest
+>>>>>>> 7035f6ed5b556d69f40b652bb309487edd9770da:docker-compose.yml
     ports:
       - "80:80"
     volumes:
-      - .:/var/www/html
-      - ./dockerize/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - php
-      - mysql
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - /var/www/html/public:/var/www/html/public
     networks:
-      - socialappdockerize
+      - laravel
 
   php:
     build:
       context: .
+<<<<<<< HEAD:docker-compose.yml2
       dockerfile: ./dockerize/app/php.dockerfile
     container_name: php
+=======
+      dockerfile: Dockerfile
+>>>>>>> 7035f6ed5b556d69f40b652bb309487edd9770da:docker-compose.yml
     volumes:
       - .:/var/www/html
+    ports:
+      - "9000:9000"
     networks:
-      - socialappdockerize 
+      - laravel
 
+<<<<<<< HEAD:docker-compose.yml2
   mysql:
     platform: linux/x86_64 
     image: mysql:8
     container_name: mysql
     restart: unless-stopped
     tty: true
+=======
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+>>>>>>> 7035f6ed5b556d69f40b652bb309487edd9770da:docker-compose.yml
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - my-datavolume:/var/lib/mysql
-      - ./dockerize/mysql/my.cnf:/etc/mysql/conf.d/mysql-custom.cnf
-    networks:
-      - socialappdockerize
-      
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+
   phpmyadmin:
+<<<<<<< HEAD:docker-compose.yml2
     image: phpmyadmin:5
     container_name: phpmyadmin
     environment:
@@ -95,6 +103,15 @@ services:
 
 volumes:
   my-datavolume:
+=======
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+>>>>>>> 7035f6ed5b556d69f40b652bb309487edd9770da:docker-compose.yml
 
 networks:
-  socialappdockerize:
+  laravel:
+    driver: bridge

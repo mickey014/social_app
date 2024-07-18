@@ -3,7 +3,7 @@ version: "4.31.1"
 services:
   server:
     image: nginx:1.17-alpine
-    container_name: lcp_nginx
+    container_name: nginx
     restart: unless-stopped
     ports:
       - "80:80"
@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: ./dockerize/app/php.dockerfile
-    container_name: lcp_php
+    container_name: php
     volumes:
       - .:/var/www/html
     networks:
@@ -29,7 +29,7 @@ services:
   mysql:
     platform: linux/x86_64 
     image: mysql:8
-    container_name: lcp_mysql
+    container_name: mysql
     restart: unless-stopped
     tty: true
     environment:
@@ -46,7 +46,7 @@ services:
       - socialappdockerize
       
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin:5
     container_name: phpmyadmin
     environment:
       PMA_HOST: db
@@ -62,7 +62,7 @@ services:
 
   composer:
     image: composer:latest
-    container_name: lcp_composer
+    container_name: composer
     volumes:
       - .:/var/www/html
     working_dir: /var/www/html
@@ -73,7 +73,7 @@ services:
 
   npm:
     image: node:20-alpine
-    container_name: lcp_npm
+    container_name: npm
     volumes:
       - .:/var/www/html
     working_dir: /var/www/html
@@ -83,7 +83,7 @@ services:
     build:
       context: .
       dockerfile: ./dockerize/app/php.dockerfile
-    container_name: lcp_artisan
+    container_name: artisan
     volumes:
       - .:/var/www/html
     depends_on:

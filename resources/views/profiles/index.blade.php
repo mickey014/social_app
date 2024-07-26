@@ -4,13 +4,15 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
-            <img src="/storage/{{$user->profile->image}}" class="w-100 rounded-circle" alt="">
+            <img src="{{$user->profile->profileImage()}}" class="w-100 rounded-circle" alt="">
         </div>
         <div class="col-9 p-5">
 
             <div class="d-flex justify-content-between align-items item-baseline">
                 <div class="d-flex align-items-center pb-4">
                     <h1>{{ $user->username; }}</h1>
+
+                    <follow-button user-id="{{$user->id}}" follows="{{$follows}}"/></follow-button>
                 </div>
     
                 @can('update', $user->profile)
@@ -23,9 +25,9 @@
             @endcan
 
             <div class="d-flex gap-5">
-                <div><strong>{{ $user->posts->count(); }}</strong> posts</div>
-                <div><strong>22k</strong> followers</div>
-                <div><strong>34k</strong> following</div>
+                <div><strong>{{$user->posts->count();}}</strong> posts</div>
+                <div><strong>{{$user->profile->followers->count();}}</strong> followers</div>
+                <div><strong>{{$user->following->count();}}</strong> following</div>
             </div>
 
             

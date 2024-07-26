@@ -11,7 +11,8 @@ class ProfilesController extends Controller
 {
     
     public function index(User $user) {
-        return view('profiles.index',compact('user'));
+        $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
+        return view('profiles.index',compact('user', 'follows'));
     }
 
     public function edit(User $user) {
@@ -31,7 +32,7 @@ class ProfilesController extends Controller
         if(request('image')) {
             $manager = new ImageManager(new Driver());
 
-            $image_path = request('image')->store('uploads','public');
+            $image_path = request('image')->store('profile','public');
     
             $image = $manager->read("storage/{$image_path}");
             // Image Crop
